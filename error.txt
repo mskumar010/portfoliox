@@ -1,0 +1,3 @@
+src/portfolio.tsx(4,3): error TS6133: 'Phone' is declared but its value is never read.
+src/portfolio.tsx(5,3): error TS6133: 'MapPin' is declared but its value is never read.
+src/portfolio.tsx(39,7): error TS6133: 'SocialIcon' is declared but its value is never read.
