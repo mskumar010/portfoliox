@@ -218,7 +218,7 @@ export default function Portfolio() {
           <a
             href={CONFIG.personal.social.github}
             target="_blank"
-            className="flex flex-col items-center justify-center p-3 rounded-xl bg-apple-surface-highlight hover:bg-primary hover:text-white transition-all text-apple-text-secondary border border-apple-border"
+            className="flex flex-col items-center justify-center p-3 rounded-xl bg-apple-surface-highlight border border-apple-border text-apple-text-secondary transition-all hover:border-primary hover:text-primary hover:shadow-md hover:shadow-primary/10"
           >
             <Github size={20} />
             <span className="text-[10px] mt-1 font-medium">GitHub</span>
@@ -226,7 +226,7 @@ export default function Portfolio() {
           <a
             href={CONFIG.personal.social.linkedin}
             target="_blank"
-            className="flex flex-col items-center justify-center p-3 rounded-xl bg-apple-surface-highlight hover:bg-primary hover:text-white transition-all text-apple-text-secondary border border-apple-border"
+            className="flex flex-col items-center justify-center p-3 rounded-xl bg-apple-surface-highlight border border-apple-border text-apple-text-secondary transition-all hover:border-primary hover:text-primary hover:shadow-md hover:shadow-primary/10"
           >
             <Linkedin size={20} />
             <span className="text-[10px] mt-1 font-medium">LinkedIn</span>
@@ -234,7 +234,7 @@ export default function Portfolio() {
           <a
             href={CONFIG.personal.social.twitter}
             target="_blank"
-            className="flex flex-col items-center justify-center p-3 rounded-xl bg-apple-surface-highlight hover:bg-primary hover:text-white transition-all text-apple-text-secondary border border-apple-border"
+            className="flex flex-col items-center justify-center p-3 rounded-xl bg-apple-surface-highlight border border-apple-border text-apple-text-secondary transition-all hover:border-primary hover:text-primary hover:shadow-md hover:shadow-primary/10"
           >
             <Twitter size={20} />
             <span className="text-[10px] mt-1 font-medium">Twitter</span>
@@ -416,7 +416,7 @@ export default function Portfolio() {
         </div>
       </section>
       {/* Tech Stack Visuals */}
-      <section className="mb-12">
+      <section className="mb-12 mt-12">
         <h3 className="text-2xl font-bold text-apple-text-primary mb-8">
           Technologies
         </h3>

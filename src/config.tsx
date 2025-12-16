@@ -1,3 +1,20 @@
+import {
+  SiReact,
+  SiTypescript,
+  SiTailwindcss,
+  SiRedux,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiExpress,
+  SiPostgresql,
+  SiMongodb,
+  SiFirebase,
+  SiGit,
+  SiDocker,
+  SiFigma,
+} from "react-icons/si";
+import { VscVscode } from "react-icons/vsc";
+
 // Portfolio Configuration
 export const CONFIG = {
   // Personal Information
@@ -24,7 +41,6 @@ export const CONFIG = {
     ],
 
     // Resume PDF (place your PDF in public folder)
-    // resumePDF: "/Resume_Sandeep_Kumar.pdf",
     resumePDF: "/sandeepkumar_RN_Resume_16122025.pdf",
   },
 
@@ -72,31 +88,35 @@ export const CONFIG = {
     { name: "Tailwind CSS", level: 92 },
   ],
 
-  // Categorized Tech Stack for Visual Display
   techStack: {
     frontend: [
-      { name: "React", icon: "⚛️" },
-      { name: "React Native", icon: "📱" },
-      { name: "TypeScript", icon: "📘" },
-      { name: "Tailwind", icon: "🎨" },
-      { name: "Redux", icon: "🔄" },
-      { name: "Next.js", icon: "▲" },
+      { name: "React", icon: <SiReact size={18} color="#61DAFB" /> },
+      { name: "React Native", icon: <SiReact size={18} color="#61DAFB" /> },
+      { name: "TypeScript", icon: <SiTypescript size={18} color="#3178C6" /> },
+      { name: "Tailwind", icon: <SiTailwindcss size={18} color="#06B6D4" /> },
+      { name: "Redux", icon: <SiRedux size={18} color="#764ABC" /> },
+      {
+        name: "Next.js",
+        icon: <SiNextdotjs size={18} className="text-black dark:text-white" />,
+      },
     ],
     backend: [
-      { name: "Node.js", icon: "🟢" },
-      { name: "Express", icon: "🚂" },
-      { name: "PostgreSQL", icon: "🐘" },
-      { name: "MongoDB", icon: "🍃" },
-      { name: "Firebase", icon: "🔥" },
+      { name: "Node.js", icon: <SiNodedotjs size={18} color="#339933" /> },
+      {
+        name: "Express",
+        icon: <SiExpress size={18} className="text-black dark:text-white" />,
+      },
+      { name: "PostgreSQL", icon: <SiPostgresql size={18} color="#4169E1" /> },
+      { name: "MongoDB", icon: <SiMongodb size={18} color="#47A248" /> },
+      { name: "Firebase", icon: <SiFirebase size={18} color="#FFCA28" /> },
     ],
     tools: [
-      { name: "Git", icon: "📦" },
-      { name: "Docker", icon: "🐳" },
-      { name: "Figma", icon: "🖌️" },
-      { name: "VS Code", icon: "💻" },
+      { name: "Git", icon: <SiGit size={18} color="#F05032" /> },
+      { name: "Docker", icon: <SiDocker size={18} color="#2496ED" /> },
+      { name: "Figma", icon: <SiFigma size={18} color="#F24E1E" /> },
+      { name: "VS Code", icon: <VscVscode size={18} color="#007ACC" /> },
     ],
   },
-
   // Education
   education: [
     {
@@ -131,8 +151,7 @@ export const CONFIG = {
     {
       title: "TEJAS - AI Job Tracker",
       category: "Full Stack",
-      image:
-        "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=600&h=400&fit=crop",
+      image: "/tejas_mockup.png",
       description:
         "Intelligent job application tracker parsing emails via Gmail API & NLP with 89% accuracy.",
       longDescription:
@@ -152,14 +171,13 @@ export const CONFIG = {
         "Automated cron jobs",
         "Interactive analytics dashboard",
       ],
-      github: "https://github.com/mskumar010",
-      demo: "#",
+      github: "https://github.com/mskumar010/tejas",
+      demo: "https://tejasx.vercel.app/",
     },
     {
       title: "Connexta",
       category: "Mobile / Real-time",
-      image:
-        "https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&h=400&fit=crop",
+      image: "/connexta_mockup.png",
       description:
         "Real-time messaging platform with geospatial friend tracking using WebSockets and Google Maps.",
       longDescription:
@@ -177,14 +195,13 @@ export const CONFIG = {
         "WebSocket-based instant delivery",
         "95% Code Reusability (Web/Mobile)",
       ],
-      github: "https://github.com/mskumar010",
-      demo: "#",
+      github: "https://github.com/mskumar010/connexta",
+      demo: "https://connextra.vercel.app/",
     },
     {
       title: "Quick Text",
       category: "Web Tool",
-      image:
-        "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=600&h=400&fit=crop",
+      image: "/quicktext_mockup.png",
       description:
         "Instant cross-device text sync tool with QR-based linking and sub-200ms latency.",
       longDescription:
@@ -196,8 +213,8 @@ export const CONFIG = {
         "Support for 5+ active connections",
         "Secure session management",
       ],
-      github: "https://github.com/mskumar010",
-      demo: "#",
+      github: "https://github.com/mskumar010/quick-text",
+      demo: "https://quick-txt.vercel.app/",
     },
   ],
 
