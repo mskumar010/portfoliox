@@ -95,10 +95,7 @@ export const CONFIG = {
       { name: "TypeScript", icon: <SiTypescript size={18} color="#3178C6" /> },
       { name: "Tailwind", icon: <SiTailwindcss size={18} color="#06B6D4" /> },
       { name: "Redux", icon: <SiRedux size={18} color="#764ABC" /> },
-      {
-        name: "Next.js",
-        icon: <SiNextdotjs size={18} className="text-black dark:text-white" />,
-      },
+      
     ],
     backend: [
       { name: "Node.js", icon: <SiNodedotjs size={18} color="#339933" /> },
