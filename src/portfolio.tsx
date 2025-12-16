@@ -804,8 +804,8 @@ export default function Portfolio() {
                     // Personalize logic
                     const personalizedMessage =
                       CONFIG.quickConnectMessage.replace(
-                        "Hey Sandeep,",
-                        `Hey Sandeep, I'm ${formData.name}.`
+                        "Hi Sandeep,",
+                        `Hi Sandeep, I'm ${formData.name}.`
                       );
 
                     setFormData((prev) => ({
