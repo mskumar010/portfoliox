@@ -1,96 +1,65 @@
-# Portfolio X - Dynamic Developer Portfolio
+# PortfolioX ⚡
 
-A premium, highly responsive, and customizable portfolio template built with **React**, **Tailwind CSS**, and **Framer Motion** (via CSS animations). Designed to be "Apple-esque" with a focus on dark/light mode elegance, smooth transitions, and mobile-first usability.
+A high-performance, design-driven developer portfolio built with **React**, **TypeScript**, and **Tailwind CSS**. Features a professional "Apple-esque" aesthetic, dark mode, and a configuration-driven architecture.
 
-## 🚀 Features
+![Project Preview](/public/tejas_mockup.png)
 
-- **🎨 Dynamic Theming:** System-default, Light, and Dark modes with an "Apple-like" color palette (`#f5f5f7` / `#000000`).
-- **📱 Mobile First:** Fully responsive sidebar navigation, grid layouts, and modal views.
-- **📄 Built-in Resume Viewer:** Embed your PDF resume directly into the site with zoom and download controls.
-- **💼 Project Details:** Deep-dive views for projects with tech stack, feature lists, and banner images.
-- **⚡ Quick Connect:** Smart contact button with pre-filled messages and validation.
-- **🛠️ Easy Customization:** All content is driven by a single `CONFIG` object.
+## ✨ Features
 
-## 🛠️ Getting Started
+- **🎨 Dynamic Theming**: System-syncing Dark/Light mode with meaningful contrast (Tinted Outlines vs Solid Fills).
+- **📱 Responsive Layout**: Mobile-first architecture with a smooth sidebar navigation on desktop.
+- **⚡ Tech Stack Visuals**: Integrated **Official Brand Icons** (React, Node, Mongo, etc.) using `react-icons/si` for professional accuracy.
+- **💼 Project Showcase**: Deep-dive views with high-fidelity mockups, feature lists, and category filtering.
+- **📄 Resume Viewer**: Built-in PDF viewer (`react-pdf`) with zoom/download controls.
+- **💬 Quick Connect**: "One-Click" contact form autofill with smart validation and personalization ("Rahul from T-Hub").
+- **🛠 Config-Driven**: Entire content (Bio, Skills, Projects, Socials) managed via a single `src/config.tsx` file.
 
-### Prerequisites
+## 🚀 Tech Stack
 
-- Node.js (v18 or higher)
-- npm or yarn
+- **Framework**: React 18 + Vite
+- **Styling**: Tailwind CSS v4
+- **Language**: TypeScript
+- **Icons**: Lucide React + React Icons (Simple Icons)
+- **PDF**: React-PDF
+- **Animation**: CSS Native Animations
 
-### Installation
+## 🛠️ Installation
 
-1.  **Clone the repository:**
+1.  **Clone the repository**:
 
     ```bash
     git clone https://github.com/yourusername/portfoliox.git
     cd portfoliox
     ```
 
-2.  **Install dependencies:**
+2.  **Install dependencies**:
 
     ```bash
     npm install
     ```
 
-3.  **Start the development server:**
+3.  **Run Development Server**:
+
     ```bash
     npm run dev
     ```
 
-## 📝 Customization (IMPORTANT)
+4.  **Build for Production**:
+    ```bash
+    npm run build
+    ```
 
-All your personal details, projects, and content are managed in **`src/portfolio.tsx`**. You do NOT need to edit HTML structure manually.
+## 📝 Customization
 
-1.  Open `src/portfolio.tsx`.
-2.  Locate the `CONFIG` object at the top of the file.
-3.  Update the fields:
-    - `personal`: Name, title, email, phone, location, social links.
-    - `projects`: Add your top projects with images, descriptions, and feature lists.
-    - `skills`: Adjust your skill levels.
-    - `education` & `experience`: Add your history.
-    - `resumePDF`: Place your PDF in the `public` folder (or assets) and update the path here.
+All content is managed in **`src/config.tsx`**. You do NOT need to touch the main component logic.
 
-### Example Config:
+1.  Open `src/config.tsx`.
+2.  Update the `CONFIG` object:
+    - **Personal**: Name, Email, Bio.
+    - **Tech Stack**: Add icons using `react-icons` (e.g., `<SiReact />`).
+    - **Projects**: Update titles, descriptions, and mockups.
+    - **Theme**: Change `primaryColor` hex code to re-theme the entire app instantly.
 
-```javascript
-const CONFIG = {
-  personal: {
-    name: "Jane Doe",
-    title: "Full Stack Engineer",
-    // ...
-  },
-  // ...
-};
-```
+## 📄 License
 
-## 🎨 Theme Colors
-
-You can change the primary accent color easily:
-
-1.  In `CONFIG`, find `primaryColor`.
-2.  Change it to any hex code (e.g., `#0ea5e9` for Sky Blue, `#ec4899` for Pink). The site will automatically update all buttons, borders, and highlights.
-
-## 📦 Deployment
-
-This project is optimized for **Vercel**.
-
-1.  Push your code to GitHub.
-2.  Go to [Vercel.com](https://vercel.com) and "Add New Project".
-3.  Import your repository.
-4.  Framework Preset: **Vite**.
-5.  Click **Deploy**.
-
-That's it! Your responsive portfolio is live.
-
-## 🧱 Tech Stack
-
-- **React 18**: UI Library
-- **Tailwind CSS 3**: Styling
-- **Lucide React**: Icons
-- **React PDF**: Resume rendering
-- **Vite**: Build tool
-
----
-
-_Built with ❤️ for developers who want a clean, professional start._
+MIT License. Free to use and customize.
