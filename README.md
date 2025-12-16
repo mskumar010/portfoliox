@@ -2,7 +2,6 @@
 
 A high-performance, design-driven developer portfolio built with **React**, **TypeScript**, and **Tailwind CSS**. Features a professional "Apple-esque" aesthetic, dark mode, and a configuration-driven architecture.
 
-![Project Preview](/public/tejas_mockup.png)
 
 ## ✨ Features
 
