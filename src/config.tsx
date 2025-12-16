@@ -3,7 +3,6 @@ import {
   SiTypescript,
   SiTailwindcss,
   SiRedux,
-  SiNextdotjs,
   SiNodedotjs,
   SiExpress,
   SiPostgresql,
@@ -44,8 +43,15 @@ export const CONFIG = {
     resumePDF: "/sandeepkumar_RN_Resume_16122025.pdf",
   },
 
+  // EmailJS Configuration (Get these from https://emailjs.com)
+  emailjs: {
+    serviceId: "service_yfl37z9", // e.g. "service_xxxx"
+    templateId: "template_5cuz0le", // e.g. "template_xxxx"
+    publicKey: "15Pul5c2YnI38yq4Y", // e.g. "user_xxxx"
+  },
+
   quickConnectMessage:
-    "Hey Sandeep, I've reviewed your portfolio and our interests align perfectly. We would like to connect with you to discuss potential opportunities.",
+    "Hi Sandeep, I recently reviewed your portfolio and was impressed by your technical expertise. We are currently looking for talented engineers and I believe your background would be a great fit. I'd love to connect and discuss potential opportunities.",
 
   // Primary Theme Color (change this to your preferred color)
   primaryColor: "#0ea5e9",
@@ -95,7 +101,6 @@ export const CONFIG = {
       { name: "TypeScript", icon: <SiTypescript size={18} color="#3178C6" /> },
       { name: "Tailwind", icon: <SiTailwindcss size={18} color="#06B6D4" /> },
       { name: "Redux", icon: <SiRedux size={18} color="#764ABC" /> },
-      
     ],
     backend: [
       { name: "Node.js", icon: <SiNodedotjs size={18} color="#339933" /> },

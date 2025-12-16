@@ -22,7 +22,9 @@ import {
   Sparkles,
   User,
   FileText,
+  Loader2,
 } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import { Document, Page, pdfjs } from "react-pdf";
 
 // Set PDF worker source
@@ -631,6 +633,39 @@ export default function Portfolio() {
       message: "",
     });
 
+    const [isSending, setIsSending] = useState(false);
+    const [isSent, setIsSent] = useState(false);
+    const [sendError, setSendError] = useState("");
+
+    const handleSendEmail = async (e: React.FormEvent) => {
+      e.preventDefault();
+      setIsSending(true);
+      setSendError("");
+
+      try {
+        await emailjs.send(
+          CONFIG.emailjs.serviceId,
+          CONFIG.emailjs.templateId,
+          {
+            from_name: formData.name,
+            from_email: formData.email,
+            message: formData.message,
+          },
+          CONFIG.emailjs.publicKey
+        );
+        setIsSent(true);
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setIsSent(false), 5000); // Reset success after 5s
+      } catch (error) {
+        console.error("EmailJS Error:", error);
+        setSendError(
+          "Failed to send message. Please try again or email directly."
+        );
+      } finally {
+        setIsSending(false);
+      }
+    };
+
     return (
       <article className="animate-fadeIn">
         <header className="mb-12">
@@ -795,16 +830,7 @@ export default function Portfolio() {
                 )}
               </div>
             </div>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const subject = `Portfolio Contact from ${formData.name}`;
-                window.open(
-                  `mailto:${CONFIG.personal.email}?subject=${subject}&body=${formData.message}`
-                );
-              }}
-              className="space-y-4"
-            >
+            <form onSubmit={handleSendEmail} className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label
@@ -871,14 +897,36 @@ export default function Portfolio() {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full group relative inline-flex items-center justify-center gap-2 px-6 py-3 bg-apple-text-primary text-apple-surface rounded-xl font-semibold overflow-hidden transition-all hover:bg-primary hover:text-white active:scale-95"
+                  disabled={isSending || isSent}
+                  className={`w-full group relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold overflow-hidden transition-all shadow-lg ${
+                    isSent
+                      ? "bg-green-500 text-white cursor-default shadow-green-500/20"
+                      : "bg-primary text-white hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] shadow-primary/20"
+                  } ${isSending ? "opacity-70 cursor-wait" : ""}`}
                 >
-                  <span>Send Message</span>
-                  <Send
-                    size={16}
-                    className="group-hover:translate-x-1 transition-transform"
-                  />
+                  {isSending ? (
+                    <>
+                      <Loader2 size={18} className="animate-spin" /> Sending...
+                    </>
+                  ) : isSent ? (
+                    <>
+                      <CheckCircle size={18} /> Message Sent!
+                    </>
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <Send
+                        size={16}
+                        className="group-hover:translate-x-1 transition-transform"
+                      />
+                    </>
+                  )}
                 </button>
+                {sendError && (
+                  <p className="mt-2 text-red-500 text-xs text-center">
+                    {sendError}
+                  </p>
+                )}
               </div>
             </form>
           </div>
