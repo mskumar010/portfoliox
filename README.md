@@ -2,7 +2,6 @@
 
 A high-performance, design-driven developer portfolio built with **React**, **TypeScript**, and **Tailwind CSS**. Features a professional "Apple-esque" aesthetic, dark mode, and a configuration-driven architecture.
 
-
 ## ✨ Features
 
 - **🎨 Dynamic Theming**: System-syncing Dark/Light mode with meaningful contrast (Tinted Outlines vs Solid Fills).
@@ -46,6 +45,21 @@ A high-performance, design-driven developer portfolio built with **React**, **Ty
 4.  **Build for Production**:
     ```bash
     npm run build
+    ```
+
+## 🔐 Environment Setup
+
+To enable the contact form, you need to set up **EmailJS**.
+
+1.  Copy the example environment file:
+    ```bash
+    cp .env.example .env
+    ```
+2.  Open `.env` and fill in your EmailJS credentials:
+    ```env
+    VITE_EMAILJS_SERVICE_ID=your_service_id
+    VITE_EMAILJS_TEMPLATE_ID=your_template_id
+    VITE_EMAILJS_PUBLIC_KEY=your_public_key
     ```
 
 ## 📝 Customization

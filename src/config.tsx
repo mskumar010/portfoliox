@@ -45,9 +45,9 @@ export const CONFIG = {
 
   // EmailJS Configuration (Get these from https://emailjs.com)
   emailjs: {
-    serviceId: "service_yfl37z9", // e.g. "service_xxxx"
-    templateId: "template_5cuz0le", // e.g. "template_xxxx"
-    publicKey: "15Pul5c2YnI38yq4Y", // e.g. "user_xxxx"
+    serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID,
+    templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
   },
 
   quickConnectMessage:

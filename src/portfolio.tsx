@@ -25,6 +25,7 @@ import {
   Loader2,
 } from "lucide-react";
 import emailjs from "@emailjs/browser";
+import { FaWhatsapp } from "react-icons/fa";
 import { Document, Page, pdfjs } from "react-pdf";
 
 // Set PDF worker source
@@ -630,8 +631,12 @@ export default function Portfolio() {
     const [formData, setFormData] = useState({
       name: "",
       email: "",
+      mobile: "+91 ",
       message: "",
     });
+    const [contactMethod, setContactMethod] = useState<"email" | "whatsapp">(
+      "email"
+    );
 
     const [isSending, setIsSending] = useState(false);
     const [isSent, setIsSent] = useState(false);
@@ -642,19 +647,43 @@ export default function Portfolio() {
       setIsSending(true);
       setSendError("");
 
+      // Validation for WhatsApp: ensure mobile number is valid (simple check)
+      if (
+        contactMethod === "whatsapp" &&
+        (!formData.mobile || formData.mobile.trim().length < 5)
+      ) {
+        setSendError("Please provide a valid mobile number.");
+        setIsSending(false);
+        return;
+      }
+
+      // Combine message with contact details for EmailJS
+      const finalMessage = `
+${formData.message}
+
+--------------------------------------------------
+Preferred Contact: ${contactMethod === "whatsapp" ? "WhatsApp" : "Email"}
+Mobile Number: ${formData.mobile || "N/A"}
+--------------------------------------------------
+`;
+
       try {
         await emailjs.send(
           CONFIG.emailjs.serviceId,
           CONFIG.emailjs.templateId,
           {
             from_name: formData.name,
+            name: formData.name, // Redundant key for template compatibility
             from_email: formData.email,
-            message: formData.message,
+            email: formData.email, // Redundant key for template compatibility
+            message: finalMessage,
+            mobile: formData.mobile,
+            contact_method: contactMethod,
           },
           CONFIG.emailjs.publicKey
         );
         setIsSent(true);
-        setFormData({ name: "", email: "", message: "" });
+        setFormData({ name: "", email: "", mobile: "+91 ", message: "" });
         setTimeout(() => setIsSent(false), 5000); // Reset success after 5s
       } catch (error) {
         console.error("EmailJS Error:", error);
@@ -679,9 +708,10 @@ export default function Portfolio() {
           {/* Left Column: Contact Info & CTA */}
           <div className="space-y-8">
             <p className="text-lg text-apple-text-secondary leading-relaxed">
-              I'm always open to discussing new projects, creative ideas, or
-              opportunities to be part of your visions. Let's build something
-              amazing together.
+              I am actively seeking new opportunities to contribute my skills to
+              impactful projects. Whether you need a robust web application or a
+              seamless mobile experience, I am ready to deliver high-quality
+              solutions. Let's discuss how I can add value to your team.
             </p>
 
             <div className="space-y-6">
@@ -741,96 +771,38 @@ export default function Portfolio() {
               Send a Message
             </h3>
 
-            {/* Recruiter / Quick Connect Banner */}
-            {/* Recruiter / Quick Connect Banner */}
-            <div className="mb-6 p-4 bg-primary/5 border border-primary/10 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div>
-                <h4 className="font-bold text-primary text-sm flex items-center gap-2">
-                  <Briefcase size={14} /> Recruiting or Hiring?
-                </h4>
-                <p className="text-xs text-apple-text-secondary mt-1">
-                  Use our template for a fast, professional inquiry.
-                </p>
-              </div>
-              <div className="relative group/tooltip">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (!formData.name || !formData.email) {
-                      // Trigger native validation feedback if possible, or simple alert/shake
-                      const nameInput = document.getElementById(
-                        "name"
-                      ) as HTMLInputElement;
-                      const emailInput = document.getElementById(
-                        "email"
-                      ) as HTMLInputElement;
-
-                      if (!formData.name && nameInput) {
-                        nameInput.focus();
-                        nameInput.classList.add(
-                          "ring-2",
-                          "ring-red-500",
-                          "ring-offset-2"
-                        );
-                        setTimeout(
-                          () =>
-                            nameInput.classList.remove(
-                              "ring-2",
-                              "ring-red-500",
-                              "ring-offset-2"
-                            ),
-                          2000
-                        );
-                      } else if (!formData.email && emailInput) {
-                        emailInput.focus();
-                        emailInput.classList.add(
-                          "ring-2",
-                          "ring-red-500",
-                          "ring-offset-2"
-                        );
-                        setTimeout(
-                          () =>
-                            emailInput.classList.remove(
-                              "ring-2",
-                              "ring-red-500",
-                              "ring-offset-2"
-                            ),
-                          2000
-                        );
-                      }
-                      return;
-                    }
-
-                    // Personalize logic
-                    const personalizedMessage =
-                      CONFIG.quickConnectMessage.replace(
-                        "Hi Sandeep,",
-                        `Hi Sandeep, I'm ${formData.name}.`
-                      );
-
-                    setFormData((prev) => ({
-                      ...prev,
-                      message: personalizedMessage,
-                    }));
-                  }}
-                  className={`px-4 py-2 text-xs font-bold rounded-lg transition-all flex items-center gap-2 whitespace-nowrap border ${
-                    !formData.name || !formData.email
-                      ? "bg-apple-surface-highlight text-apple-text-muted border-apple-border cursor-not-allowed hover:bg-apple-surface-highlight"
-                      : "bg-primary/10 text-primary border-primary/20 hover:bg-primary hover:text-white"
-                  }`}
-                >
-                  <Sparkles size={14} /> Auto-fill Message
-                </button>
-                {(!formData.name || !formData.email) && (
-                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2 bg-apple-text-primary text-apple-surface text-[10px] text-center rounded-lg opacity-0 group-hover/tooltip:opacity-100 transition-opacity pointer-events-none shadow-xl">
-                    Please fill Name & Email first to generate a personalized
-                    message.
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-1 border-4 border-transparent border-t-apple-text-primary"></div>
-                  </div>
-                )}
-              </div>
-            </div>
             <form onSubmit={handleSendEmail} className="space-y-4">
+              {/* Preferred Method Toggle (TAB Design) */}
+              <div className="flex flex-col gap-2">
+                <span className="text-sm font-medium text-apple-text-secondary">
+                  Preferred Contact Method
+                </span>
+                <div className="flex bg-apple-surface-highlight rounded-xl p-1 border border-apple-border">
+                  <button
+                    type="button"
+                    onClick={() => setContactMethod("email")}
+                    className={`flex-1 py-2 px-4 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                      contactMethod === "email"
+                        ? "bg-apple-surface text-apple-text-primary shadow-sm"
+                        : "text-apple-text-secondary hover:text-apple-text-primary"
+                    }`}
+                  >
+                    <Mail size={16} /> Email
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setContactMethod("whatsapp")}
+                    className={`flex-1 py-2 px-4 rounded-lg text-sm font-bold transition-all flex items-center justify-center gap-2 ${
+                      contactMethod === "whatsapp"
+                        ? "bg-green-500 text-white shadow-sm"
+                        : "text-apple-text-secondary hover:text-green-600"
+                    }`}
+                  >
+                    <FaWhatsapp size={16} /> WhatsApp
+                  </button>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <label
@@ -843,7 +815,7 @@ export default function Portfolio() {
                     id="name"
                     type="text"
                     required
-                    placeholder="Rahul from T-Hub"
+                    placeholder="Ex: Name from T-Hub"
                     value={formData.name}
                     onChange={(e) =>
                       setFormData({ ...formData, name: e.target.value })
@@ -862,12 +834,41 @@ export default function Portfolio() {
                     id="email"
                     type="email"
                     required
-                    placeholder="rahul@t-hub.co"
+                    placeholder="Ex: name@t-hub.com"
                     value={formData.email}
                     onChange={(e) =>
                       setFormData({ ...formData, email: e.target.value })
                     }
                     className="w-full px-4 py-3 bg-apple-surface-highlight border border-apple-border rounded-xl text-apple-text-primary placeholder:text-apple-text-muted focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all"
+                  />
+                </div>
+              </div>
+
+              {/* Mobile Number - Animated Show/Hide */}
+              <div
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                  contactMethod === "whatsapp"
+                    ? "max-h-24 opacity-100"
+                    : "max-h-0 opacity-0"
+                }`}
+              >
+                <div className="space-y-2 pt-1">
+                  <label
+                    htmlFor="mobile"
+                    className="text-sm font-medium text-apple-text-secondary"
+                  >
+                    Mobile Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    id="mobile"
+                    type="tel"
+                    required={contactMethod === "whatsapp"}
+                    placeholder="+91 98765 43210"
+                    value={formData.mobile}
+                    onChange={(e) =>
+                      setFormData({ ...formData, mobile: e.target.value })
+                    }
+                    className="w-full px-4 py-3 bg-apple-surface-highlight border border-apple-border rounded-xl text-apple-text-primary placeholder:text-apple-text-muted focus:border-green-500 focus:ring-1 focus:ring-green-500 outline-none transition-all"
                   />
                 </div>
               </div>
@@ -880,6 +881,80 @@ export default function Portfolio() {
                   >
                     Message
                   </label>
+                  {/* Auto-fill Button */}
+                  <div className="relative group/tooltip">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (!formData.name || !formData.email) {
+                          const nameInput = document.getElementById(
+                            "name"
+                          ) as HTMLInputElement;
+                          const emailInput = document.getElementById(
+                            "email"
+                          ) as HTMLInputElement;
+
+                          if (!formData.name && nameInput) {
+                            nameInput.focus();
+                            nameInput.classList.add(
+                              "ring-2",
+                              "ring-red-500",
+                              "ring-offset-2"
+                            );
+                            setTimeout(
+                              () =>
+                                nameInput.classList.remove(
+                                  "ring-2",
+                                  "ring-red-500",
+                                  "ring-offset-2"
+                                ),
+                              2000
+                            );
+                          } else if (!formData.email && emailInput) {
+                            emailInput.focus();
+                            emailInput.classList.add(
+                              "ring-2",
+                              "ring-red-500",
+                              "ring-offset-2"
+                            );
+                            setTimeout(
+                              () =>
+                                emailInput.classList.remove(
+                                  "ring-2",
+                                  "ring-red-500",
+                                  "ring-offset-2"
+                                ),
+                              2000
+                            );
+                          }
+                          return;
+                        }
+
+                        const personalizedMessage =
+                          CONFIG.quickConnectMessage.replace(
+                            "Hi Sandeep,",
+                            `Hi Sandeep, I'm ${formData.name}.`
+                          );
+
+                        setFormData((prev) => ({
+                          ...prev,
+                          message: personalizedMessage,
+                        }));
+                      }}
+                      className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all flex items-center gap-1.5 border shadow-sm ${
+                        !formData.name || !formData.email
+                          ? "bg-apple-surface-highlight text-apple-text-muted border-apple-border cursor-not-allowed hover:bg-apple-surface-highlight"
+                          : "bg-primary/10 text-primary border-primary/20 hover:bg-primary/20"
+                      }`}
+                    >
+                      <Sparkles size={12} /> Auto-fill
+                    </button>
+                    {(!formData.name || !formData.email) && (
+                      <div className="absolute bottom-full right-0 mb-2 w-48 p-2 bg-apple-text-primary text-apple-surface text-[10px] text-center rounded-lg opacity-0 group-hover/tooltip:opacity-100 transition-opacity pointer-events-none shadow-xl z-10">
+                        Fill Name & Email to auto-generate message
+                      </div>
+                    )}
+                  </div>
                 </div>
                 <textarea
                   id="message"
@@ -890,7 +965,7 @@ export default function Portfolio() {
                     setFormData({ ...formData, message: e.target.value })
                   }
                   rows={5}
-                  className="w-full px-4 py-3 bg-apple-surface-highlight border border-apple-border rounded-xl text-apple-text-primary placeholder:text-apple-text-muted focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-none"
+                  className="w-full px-4 py-3 bg-apple-surface-highlight border border-apple-border rounded-xl text-apple-text-primary placeholder:text-apple-text-muted focus:border-primary focus:ring-1 focus:ring-primary outline-none transition-all resize-y min-h-[120px]"
                 />
               </div>
 
@@ -901,7 +976,7 @@ export default function Portfolio() {
                   className={`w-full group relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold overflow-hidden transition-all shadow-lg ${
                     isSent
                       ? "bg-green-500 text-white cursor-default shadow-green-500/20"
-                      : "bg-primary text-white hover:bg-primary/90 hover:scale-[1.02] active:scale-[0.98] shadow-primary/20"
+                      : "bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 hover:scale-[1.02] active:scale-[0.98] shadow-xl"
                   } ${isSending ? "opacity-70 cursor-wait" : ""}`}
                 >
                   {isSending ? (
@@ -937,7 +1012,7 @@ export default function Portfolio() {
 
   return (
     <div className="min-h-screen bg-apple-base text-apple-text-primary font-sans selection:bg-primary/30">
-      <div className="flex max-w-[1920px] mx-auto min-h-screen relative justify-evenly">
+      <div className="flex max-w-[1440px] mx-auto min-h-screen relative justify-evenly">
         {/* Sidebar */}
         <Sidebar />
 
@@ -951,21 +1026,21 @@ export default function Portfolio() {
 
         {/* Main Content Area */}
         <main className="flex-1 min-w-0 px-4 pt-20 pb-12 lg:px-10 lg:py-8 lg:max-w-6xl transition-all duration-300">
-          <section id="about" className="min-h-screen py-8 scroll-mt-20">
+          <section id="about" className="py-8 scroll-mt-20">
             <AboutSection />
           </section>
 
           <div className="h-px bg-apple-border my-12" />
 
           {/* Section 2: Projects */}
-          <section id="projects" className="min-h-screen py-8 scroll-mt-20">
+          <section id="projects" className="py-8 scroll-mt-20">
             <PortfolioSection />
           </section>
 
           <div className="h-px bg-apple-border my-12" />
 
           {/* Section 3: Resume */}
-          <section id="resume" className="min-h-screen py-8 scroll-mt-20">
+          <section id="resume" className="py-8 scroll-mt-20">
             <ResumeSection />
           </section>
 
